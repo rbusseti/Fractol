@@ -35,9 +35,10 @@ char    **ft_init_fract_name(void)
 {
     char    **name;
 
-    name = malloc(sizeof(char *) * 3);
+    name = malloc(sizeof(char *) * 4);
     name[0] = "mandelbrot";
     name[1] = "julia";
-    name[2] = NULL;
+    name[2] = "lyapunov";
+    name[3] = NULL;
     return (name);
 }

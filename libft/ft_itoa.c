@@ -16,6 +16,7 @@ char	*calc_itoa(int n, int i, char *strnew)
 {
 	int		mod;
 
+        strnew[i] = '\0';
 	if (n < 0)
 	{
 		n = n * (-1);
@@ -52,7 +53,6 @@ char	*ft_itoa(int n)
 	}
 	if ((strnew = malloc(sizeof(char) * (i + 1))) == NULL)
 		return (NULL);
-	strnew = malloc(sizeof(char) * (i + 1));
 	strnew = calc_itoa(nsave, i, strnew);
 	return (strnew);
 }

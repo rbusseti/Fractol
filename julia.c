@@ -1,16 +1,18 @@
 # include "fractol.h"
 
-t_mand  *ft_init_mandelbrot(t_env *e)
+t_mand  *ft_init_julia(t_env *e)
 {
     t_mand  *man;
 
     man = malloc(sizeof(*man));
     man->zoomx = e->width / (e->zone->x2 - e->zone->x1);
     man->zoomy = e->height / (e->zone->y2 - e->zone->y1);
+    man->cr = e->zone->cr;
+    man->ci = e->zone->ci;
     return (man);
 }
 
-void    ft_browse_column(t_env *e, t_mand *man, int i)
+void    ft_browse_jcolumn(t_env *e, t_mand *man, int i)
 {
     int             j;
     int             c;
@@ -21,14 +23,12 @@ void    ft_browse_column(t_env *e, t_mand *man, int i)
     j = 0;
     while (j < e->height)
     {
-        man->cr = i / man->zoomx  + e->zone->x1;
-        man->ci = j / man->zoomy  + e->zone->y1;
-        man->zr = 0;
-        man->zi = 0;
+        man->zr = i / man->zoomx  + e->zone->x1;
+        man->zi = j / man->zoomy  + e->zone->y1;
         sqzr = man->zr * man->zr;
         sqzi = man->zi * man->zi;
         c = 0;
-        while ((sqzr + sqzi <= 4 && sqzr + sqzi >= -4) && c < e->zone->cmax)
+        while (sqzr + sqzi <= 2 && c < e->zone->cmax)
         {
             tmp = man->zr;
             man->zr = sqzr - sqzi + man->cr;
@@ -36,23 +36,24 @@ void    ft_browse_column(t_env *e, t_mand *man, int i)
             sqzr = man->zr * man->zr;
             sqzi = man->zi * man->zi;
             c++;
-        }
+        }   
         ft_draw(e, c, i, j);
         j++;
     }
 }
 
-void    ft_mandelbrot(t_env *e)
+void    ft_julia(t_env *e)
 {
     t_mand  *man;
     int     i;
 
-    man = ft_init_mandelbrot(e);
+    man = ft_init_julia(e);
     i = 0;
     while (i < e->width)
     {
-        ft_browse_column(e, man, i);
+        ft_browse_jcolumn(e, man, i);
         i++;
     }
     free(man);
+
 }

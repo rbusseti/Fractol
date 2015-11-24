@@ -1,7 +1,11 @@
 NAME = test
 
+DEBUGNAME = debug
+
 SRC = main.c fract_name.c expose_hook.c key_hook.c mouse_hook.c loop_hook.c \
-	mandelbrot.c init.c ft_pixel_put_to_image.c
+	mandelbrot.c init.c ft_pixel_put_to_image.c ft_rgb.c \
+	ft_make_palette.c init_color.c draw.c julia.c launch_fractale.c \
+	motion_hook.c lyapunov.c save_image.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -21,6 +25,10 @@ $(NAME): $(OBJ)
 
 %.o:%.c
 	$(CC) $(FLAGS) -c -o $@ $^ $(INC)
+
+debug:
+	make -C libft/
+	$(CC) -g -o $(DEBUGNAME) $(SRC) $(FLAGS) $(LIB) $(INC)
 
 clean:
 	rm -rf $(OBJ)
